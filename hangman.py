@@ -5,8 +5,8 @@
 import random
 
 # open the word list and send the contents to a list called words
-f = open("word_list.txt","r")
-words = f.readlines()
+file = open("word_list.txt","r")
+words = file.readlines()
 
 # pick a random word from the words list
 random_number = int(random.uniform(0.0, 99.0))
