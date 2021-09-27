@@ -25,15 +25,20 @@ for i in word:
 #print the hashed word
 print(hashed_word,"\n")
 
-# prompt user to enter a letter (this could be made into a function)
-user_guess = input("Please enter your next guess: ")
-# make user_guess lower case
-user_guess = user_guess.lower()
-# ensure the player only enters one letter at a time 
-if len(user_guess) > 1:
+# define a function to prompt the user to enter a letter
+def message():
+    user_guess = input("Please enter your next guess: ")
+    # make user_guess lower case
+    user_guess = user_guess.lower()
+    # ensure the player only enters one letter at a time 
+    while len(user_guess) != 1:
         print("Please only enter one letter at a time")
         user_guess = input("Please enter your next guess: ")
         user_guess = user_guess.lower()
+    return user_guess
+
+# call the message function and assign the return value to the user_guess variable
+user_guess = message()
 
 # this for loop runs 7 times
 for x in range(7):
@@ -57,13 +62,6 @@ for x in range(7):
         print(word)
         print("you lose")
         break
-
-    # prompt user to enter a letter (this could be made into a function)
-    user_guess = input("Please enter your next guess: ")
-    # make user_guess lower case
-    user_guess = user_guess.lower()
-    # ensure the player only enters one letter at a time 
-    if len(user_guess) > 1:
-            print("Please only enter one letter at a time")
-            user_guess = input("Please enter your next guess: ")
-            user_guess = user_guess.lower()
+    
+    # call the message function and assign the return value to the user_guess variable
+    user_guess = message()
