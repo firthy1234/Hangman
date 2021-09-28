@@ -1,7 +1,8 @@
 # A simple game of hangman
 # Created by Chris Firth on 26 Sep 21
+# Last updated 28 Sep 21
 
-#import the uniform library
+#import the random library
 import random
 
 # open the word list and send the contents to a list called words
