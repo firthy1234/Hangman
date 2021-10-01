@@ -1,6 +1,6 @@
 # A simple game of hangman
 # Created by Chris Firth on 26 Sep 21
-# Last updated 28 Sep 21
+# Last updated 1 Oct 21
 
 #import the random library
 import random
