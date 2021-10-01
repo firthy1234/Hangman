@@ -10,8 +10,9 @@ file = open("word_list.txt","r")
 words = file.readlines()
 
 # pick a random word from the words list
-random_number = int(random.uniform(0.0, 99.0))
-word = (words[random_number])
+#random_number = int(random.uniform(0.0, 99.0)) THIS WAS MY OLD METHOD
+#word = (words[random_number]) THIS WAS MY OLD METHOD
+word = random.choice(words) # This is my new method
 
 # remove the \n from the word
 word = word[:-1]
