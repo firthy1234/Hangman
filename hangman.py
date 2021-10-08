@@ -1,69 +1,48 @@
-# A simple game of hangman
-# Created by Chris Firth on 26 Sep 21
-# Last updated 1 Oct 21
+# A simple game of hangman by Chris Firth
+# Created on 26 Sep 21. Last updated 8 Oct 21
 
-#import the random library
-import random
+import random                         # import the random library
+file = open("word_list.txt","r")      # open the word list file
+words = file.readlines()              # read the contents of each line of the file
+word = random.choice(words)           # pick a random word from the words list
+word = word[:-1]                      # remove the \n from the word
+hashed_word = ""                      # assign a blank string to the hashed_word variable
 
-# open the word list and send the contents to a list called words
-file = open("word_list.txt","r")
-words = file.readlines()
+for character in word:                # create the hashed word by printing a * for every character
+    hashed_word += "*"                # of the randomly chosen word
 
-# pick a random word from the words list
-#random_number = int(random.uniform(0.0, 99.0)) THIS WAS MY OLD METHOD
-#word = (words[random_number]) THIS WAS MY OLD METHOD
-word = random.choice(words) # This is my new method
-
-# remove the \n from the word
-word = word[:-1]
-
-# assign a blank string to the hashed_word variable
-hashed_word = ""
-
-#create the hashed word by printing a * for every character of the randomly chosen word
-for i in word:
-    hashed_word += "*"
-
-#print the hashed word
-print(hashed_word,"\n")
-
-# define a function to prompt the user to enter a letter
-def message():
+def message():                        # define a function to prompt the user to enter a letter
     user_guess = input("Please enter your next guess: ")
-    # make user_guess lower case
-    user_guess = user_guess.lower()
-    # ensure the player only enters one letter at a time 
-    while len(user_guess) != 1:
+    user_guess = user_guess.lower()   # make user_guess lower case
+    while len(user_guess) != 1:       # ensure the player only enters one letter at a time 
         print("Please only enter one letter at a time")
         user_guess = input("Please enter your next guess: ")
         user_guess = user_guess.lower()
     return user_guess
 
-# call the message function and assign the return value to the user_guess variable
-user_guess = message()
+lives = 7                             # The lives variable will decrement with each incorrect guess
 
-# this for loop runs 7 times
-for x in range(7):
-    
-    # check each letter in word for a match against user_guess
-    for i in range(len(word)):
+while lives:                          # while the players has lives remaining 
+    correct_guess = False             # start by resetting correct_guess to false
+    print("\n",hashed_word,"\n")      # print the current hashed word (includes any correct guesses)   
+    user_guess = message()            # call message() and assign the return to user_guess
+
+    for i in range(len(word)):        # check each letter in word for a match against user_guess
         # if user_guess matches a character in word, replace that character in hashed_word
         if user_guess == word[i]:
             hashed_word = hashed_word[:i] + user_guess + hashed_word[i+1:]
+            correct_guess = True      # set correct_guess to True
+     
+    if not correct_guess:             # if correct_guess is still False: 
+        lives -= 1                         # - remove a life 
+        print(lives, "lives remaining...") # - inform the player of the number of lives remainig
+
+    if hashed_word == word:           # if the player guesses all the letters: 
+        print("Answer:  ",word)            # - print the word the player was trying to guess
+        print("Congratulations, you win!") # - inform the player they've won
+        break                              # - break the while loop
     
-    # print the current hashed word whih will include any correct guesses 
-    print("\n",hashed_word,"\n")
-        
-    # if the user guesses all letters, the for loop breaks
-    if hashed_word == word:
-        print("congratulations you win")
-        break
-    
-    #if the user fails to guess all the letters after their 7th attempt
-    if x == 6:
-        print(word)
-        print("you lose")
-        break
-    
-    # call the message function and assign the return value to the user_guess variable
-    user_guess = message()
+    if lives == 0:                    # if lives gets to zero:
+        print("Answer:  ",word)            # - print the word the player was trying to guess
+        print("Sorry, you lose.")          # - inform the player they've lost
+        break                              # - break the while loop
